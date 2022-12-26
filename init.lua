@@ -1,6 +1,7 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+local M = {}
 -- Install packer
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 local is_bootstrap = false
@@ -124,14 +125,16 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.relativenumber = true
 vim.o.number = true
+vim.o.tabstop = 2
+vim.o.shiftwidth = 2
 
 -- Decrease update time
-vim.o.updatetime = 250
-vim.wo.signcolumn = 'yes'
+-- vim.o.updatetime = 250
+-- vim.wo.signcolumn = 'yes'
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme tokyonight-night]]
+vim.cmd [[colorscheme nightfly]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -153,9 +156,9 @@ vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 vim.keymap.set("i", "jj", "<Esc>")
-vim.keymap.set("v", "<Leader>y", "\"+y")
-vim.keymap.set("v", "<Leader>P", "\"+P")
-vim.keymap.set("v", "<Leader>p", "\"+p")
+vim.keymap.set("v", "<Leader>y", "\"+y", { silent = true })
+vim.keymap.set("v", "<Leader>P", "\"+P", { silent = true })
+vim.keymap.set("v", "<Leader>p", "\"+p", { silent = true })
 
 vim.keymap.set('n', '<leader>w', "<cmd>w<cr>")
 vim.keymap.set("n", "<C-h>", "<C-w>h")
@@ -289,7 +292,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'lua', 'python', 'typescript', 'help', 'bash', 'css', 'json', 'yaml' },
+  ensure_installed = { 'lua', 'python', 'typescript', 'help', 'bash', 'css', 'json', 'yaml', 'hcl' },
 
   highlight = { enable = true },
   indent = { enable = true },
@@ -351,7 +354,17 @@ require('nvim-treesitter.configs').setup {
 -- Diagnostic keymaps
 vim.keymap.set('n', '[j', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']j', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+-- local diagnostics_active = true
+-- vim.keymap.set('n', '<leader>q', function()
+--   diagnostics_active = not diagnostics_active
+--   if diagnostics_active then
+--     vim.diagnostic.show()
+--   else
+--     vim.diagnostic.hide()
+--   end
+-- end)
+
+vim.keymap.set('n', '<leader>Q', vim.diagnostic.open_float)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
 -- LSP settings.
@@ -508,8 +521,8 @@ require("nvim-surround").setup()
 
 -- Bufferline
 require("bufferline").setup{}
-vim.keymap.set("n", "<S-l>", ":BufferLineCycleNext<CR>")
-vim.keymap.set("n", "<S-h>", ":BufferLineCyclePrev<CR>")
+vim.keymap.set("n", "<S-l>", ":BufferLineCycleNext<CR>", { silent = true, desc = "Switch to left buffer "})
+vim.keymap.set("n", "<S-h>", ":BufferLineCyclePrev<CR>", { silent = true, desc = "Switch to right buffer "})
 vim.keymap.set("n", "<Leader>bl", ":BufferLineCloseLeft<CR>", { silent = true, desc = 'Close All Buffer To The Left' })
 vim.keymap.set("n", "<Leader>bh", ":BufferLineCloseLeft<CR>", { silent = true, desc = 'Close All Buffer To The Right'})
 vim.keymap.set("n", "<Leader>bq", ":BufferLineTogglePin<CR>", { silent = true, desc = 'Pin Buffer'})
@@ -539,3 +552,8 @@ require("nvim-tree").setup({
 vim.keymap.set("n", "<Leader>e", ":NvimTreeToggle<CR>", { silent = true, desc = 'Toggle NVIM Tree'})
 
 require('nvim-autopairs').setup()
+
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.o.foldenable = false -- Disable folding at startup
+
