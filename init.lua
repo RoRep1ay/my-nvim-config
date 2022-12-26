@@ -1,7 +1,5 @@
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+require('base-config')
 
-local M = {}
 -- Install packer
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 local is_bootstrap = false
@@ -102,75 +100,6 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   pattern = vim.fn.expand '$MYVIMRC',
 })
 
--- [[ Setting options ]]
--- See `:help vim.o`
-
--- Set highlight on search
-vim.o.hlsearch = true
-
--- Make line numbers default
-vim.wo.number = true
-
--- Enable mouse mode
-vim.o.mouse = 'a'
-
--- Enable break indent
-vim.o.breakindent = true
-
--- Save undo history
-vim.o.undofile = true
-
--- Case insensitive searching UNLESS /C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
-vim.o.relativenumber = true
-vim.o.number = true
-vim.o.tabstop = 2
-vim.o.shiftwidth = 2
-
--- Decrease update time
--- vim.o.updatetime = 250
--- vim.wo.signcolumn = 'yes'
-
--- Set colorscheme
-vim.o.termguicolors = true
-vim.cmd [[colorscheme nightfly]]
-
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
-vim.o.scrolloff = 8
-
--- [[ Basic Keymaps ]]
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
--- Keymaps for better default experience
--- See `:help vim.keymap.set()`
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-
-vim.keymap.set("x", "p", [["_dP]])
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-
-vim.keymap.set("i", "jj", "<Esc>")
-vim.keymap.set("v", "<Leader>y", "\"+y", { silent = true })
-vim.keymap.set("v", "<Leader>P", "\"+P", { silent = true })
-vim.keymap.set("v", "<Leader>p", "\"+p", { silent = true })
-
-vim.keymap.set('n', '<leader>w', "<cmd>w<cr>")
-vim.keymap.set("n", "<C-h>", "<C-w>h")
-vim.keymap.set("n", "<C-j>", "<C-w>j")
-vim.keymap.set("n", "<C-k>", "<C-w>k")
-vim.keymap.set("n", "<C-l>", "<C-w>l")
-vim.keymap.set("n", "<leader>h", "<cmd>:noh<cr>")
--- lvim.builtin.terminal.open_mapping = [[<c-t>]]
--- -- Remap for dealing with word wrap
--- vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
--- vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 -- local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
@@ -268,26 +197,6 @@ require('telescope').setup {
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
 
--- See `:help telescope.builtin`
-vim.keymap.set('n', '<leader>o', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
--- vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
-vim.keymap.set('n', '<leader>sf', function()
-  -- You can pass additional configuration to telescope to change theme, layout, etc.
-  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-    winblend = 10,
-    previewer = false,
-  })
-end, { desc = '[/] Fuzzily search in current buffer]' })
-
--- vim.keymap.set('n', '<leader>f', require('telescope.builtin').find_files, { desc = 'Search [F]iles' })
-vim.keymap.set('n', '<leader>f', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>go', require('telescope.builtin').git_status, { desc = 'Open Changed Files' })
-vim.keymap.set('n', '<leader>bf', function() require('telescope.builtin').buffers{ previewer = false } end, { desc = 'Open Buffer File' })
-vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>st', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
-
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
@@ -350,22 +259,6 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
-
--- Diagnostic keymaps
-vim.keymap.set('n', '[j', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']j', vim.diagnostic.goto_next)
--- local diagnostics_active = true
--- vim.keymap.set('n', '<leader>q', function()
---   diagnostics_active = not diagnostics_active
---   if diagnostics_active then
---     vim.diagnostic.show()
---   else
---     vim.diagnostic.hide()
---   end
--- end)
-
-vim.keymap.set('n', '<leader>Q', vim.diagnostic.open_float)
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
@@ -521,15 +414,7 @@ require("nvim-surround").setup()
 
 -- Bufferline
 require("bufferline").setup{}
-vim.keymap.set("n", "<S-l>", ":BufferLineCycleNext<CR>", { silent = true, desc = "Switch to left buffer "})
-vim.keymap.set("n", "<S-h>", ":BufferLineCyclePrev<CR>", { silent = true, desc = "Switch to right buffer "})
-vim.keymap.set("n", "<Leader>bl", ":BufferLineCloseLeft<CR>", { silent = true, desc = 'Close All Buffer To The Left' })
-vim.keymap.set("n", "<Leader>bh", ":BufferLineCloseLeft<CR>", { silent = true, desc = 'Close All Buffer To The Right'})
-vim.keymap.set("n", "<Leader>bq", ":BufferLineTogglePin<CR>", { silent = true, desc = 'Pin Buffer'})
-vim.keymap.set("n", "<Leader>bp", ":BufferLinePick<CR>", { silent = true, desc = 'Pick A Buffer'})
-vim.keymap.set("n", "<Leader>bc", ":BufferLinePickClose<CR>", { silent = true, desc = 'Select A Buffer To Close'})
 
--- 
 require("nvim-tree").setup({
   update_focused_file = {
     enable = true,
@@ -549,11 +434,8 @@ require("nvim-tree").setup({
   },
 })
 
-vim.keymap.set("n", "<Leader>e", ":NvimTreeToggle<CR>", { silent = true, desc = 'Toggle NVIM Tree'})
-
 require('nvim-autopairs').setup()
 
-vim.o.foldmethod = "expr"
-vim.o.foldexpr = "nvim_treesitter#foldexpr()"
-vim.o.foldenable = false -- Disable folding at startup
+require('vim-config')
+require('keymap-config')
 
