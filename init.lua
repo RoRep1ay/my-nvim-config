@@ -1,4 +1,5 @@
 require('base-config')
+require('impatient')
 
 -- Install packer
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
@@ -12,6 +13,7 @@ end
 require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
+  use { 'lewis6991/impatient.nvim' }
 
   use { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
@@ -67,7 +69,7 @@ require('packer').startup(function(use)
   use { 'kyazdani42/nvim-web-devicons' }
   use { 'kyazdani42/nvim-tree.lua' }
   use { 'windwp/nvim-autopairs' }
-  use 'folke/tokyonight.nvim'
+  use { 'folke/tokyonight.nvim'}
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
   if has_plugins then
@@ -201,7 +203,7 @@ pcall(require('telescope').load_extension, 'fzf')
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'lua', 'python', 'typescript', 'help', 'bash', 'css', 'json', 'yaml', 'hcl' },
+  ensure_installed = { 'lua', 'python', 'typescript', 'help', 'bash', 'css', 'json', 'yaml', 'hcl', 'html', },
 
   highlight = { enable = true },
   indent = { enable = true },
@@ -314,7 +316,7 @@ require('mason').setup()
 
 -- Enable the following language servers
 -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'angularls' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'angularls', 'html', 'emmet_ls' }
 
 -- Ensure the servers above are installed
 require('mason-lspconfig').setup {
@@ -331,6 +333,34 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
+
+local default_node_modules = vim.fn.getcwd() .. "/node_modules"
+
+local ngls_cmd = {
+    "ngserver",
+    "--stdio",
+    "--tsProbeLocations",
+    default_node_modules,
+    "--ngProbeLocations",
+    default_node_modules,
+    "--experimental-ivy",
+}
+
+require('lspconfig').angularls.setup({
+  cmd = ngls_cmd,
+  on_new_config = function(new_config)
+    new_config.cmd = ngls_cmd
+  end,
+  on_attach = on_attach,
+  capabilities = capabilities,
+})
+
+local htmlCapabilities = vim.lsp.protocol.make_client_capabilities()
+htmlCapabilities.textDocument.completion.completionItem.snippetSupport = true
+require('lspconfig').html.setup({
+  on_attach = on_attach,
+  capabilities = htmlCapabilities,
+})
 
 -- Turn on lsp status information
 require('fidget').setup()
@@ -378,6 +408,10 @@ cmp.setup {
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ['<Tab>'] = cmp.mapping.confirm {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
