@@ -57,6 +57,8 @@ require('packer').startup(function(use)
 
   -- Fuzzy Finder (files, lsp, etc)
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
+  -- use { '~/.config/nvim/myplugin/example-plugin' }
+  -- use { '~/.config/nvim/myplugin/telescope.nvim', requires = { '~/.config/nvim/myplugin/plenary.nvim' } }
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
@@ -70,6 +72,15 @@ require('packer').startup(function(use)
   use { 'kyazdani42/nvim-tree.lua' }
   use { 'windwp/nvim-autopairs' }
   use { 'folke/tokyonight.nvim'}
+  use { 'Mofiqul/vscode.nvim' }
+  use { 'akinsho/toggleterm.nvim', tag = '*', config = function()
+    require("toggleterm").setup({
+      direction = 'float',
+      open_mapping = [[<c-t>]],
+      start_in_insert = true,
+      insert_mappings = true, -- whether or not the open mapping applies in insert mode
+    })
+  end}
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
   if has_plugins then
@@ -135,56 +146,28 @@ require('indent_blankline').setup {
 }
 
 require('gitsigns-config')
-
--- [[ Configure Telescope ]]
--- See `:help telescope` and `:help telescope.setup()`
-require('telescope').setup {
-  defaults = {
-    mappings = {
-      i = {
-        ['<C-u>'] = false,
-        ['<C-d>'] = false,
-      },
-    },
-  },
-}
-
--- Enable telescope fzf native, if installed
-pcall(require('telescope').load_extension, 'fzf')
-
 require('treesitter-config')
 require('lsp-config')
+require('nvim-tree-config')
+require('bufferline-config')
+require('telescope-config')
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
---
+
 -- NVIM Surround
 require("nvim-surround").setup()
 
--- Bufferline
-require("bufferline").setup{}
-
-require("nvim-tree").setup({
-  update_focused_file = {
-    enable = true,
-    update_cwd = true,
-    ignore_list = {},
-  },
-
-  view = {
-    adaptive_size = true,
-    mappings = {
-      list = {
-        { key = "h", action = "close_node" },
-        { key = "l", action = "open_node" },
-        { key = "v", action = "vsplit" },
-      },
-    },
-  },
-})
 
 require('nvim-autopairs').setup()
 
 require('vim-config')
 require('keymap-config')
+function _G.set_terminal_keymaps()
+  local opts = {buffer = 0}
+  vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+end
 
+-- if you only want these mappings for toggle term use term://*toggleterm#* instead
+vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')

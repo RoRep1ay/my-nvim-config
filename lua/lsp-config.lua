@@ -148,6 +148,15 @@ local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 
 cmp.setup {
+  window = {
+    completion = {
+      winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
+    },
+
+    documentation = {
+      winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
+    },
+  },
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
