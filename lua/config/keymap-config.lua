@@ -26,24 +26,24 @@ set('n', ']j', vim.diagnostic.goto_next)
 set('n', '<leader>Q', vim.diagnostic.open_float)
 set('n', '<leader>q', vim.diagnostic.setloclist)
 
--- Telescope
-set('n', '<leader>f', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-set('n', '<leader>go', require('telescope.builtin').git_status, { desc = 'Open Changed Files' })
-set('n', '<leader>bf', function() require('telescope.builtin').buffers{ previewer = false } end, { desc = 'Open Buffer File' })
-set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-set('n', '<leader>st', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
-set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
-set('n', '<leader>o', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
--- set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
-set('n', '<leader>sf', function()
-  -- You can pass additional configuration to telescope to change theme, layout, etc.
-  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-    winblend = 10,
-    previewer = false,
-  })
-end, { desc = '[/] Fuzzily search in current buffer]' })
+-- -- Telescope
+-- set('n', '<leader>f', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+-- set('n', '<leader>go', require('telescope.builtin').git_status, { desc = 'Open Changed Files' })
+-- set('n', '<leader>bf', function() require('telescope.builtin').buffers{ previewer = false } end, { desc = 'Open Buffer File' })
+-- set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
+-- set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
+-- set('n', '<leader>st', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+-- set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
+-- set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+-- set('n', '<leader>o', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
+-- -- set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
+-- set('n', '<leader>sf', function()
+--   -- You can pass additional configuration to telescope to change theme, layout, etc.
+--   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+--     winblend = 10,
+--     previewer = false,
+--   })
+-- end, { desc = '[/] Fuzzily search in current buffer]' })
 
 
 -- Bufferline
