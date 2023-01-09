@@ -73,6 +73,7 @@ require('packer').startup(function(use)
   use { 'windwp/nvim-autopairs' }
   use { 'folke/tokyonight.nvim'}
   use { 'Mofiqul/vscode.nvim' }
+  use { 'jose-elias-alvarez/null-ls.nvim' }
   use { 'akinsho/toggleterm.nvim', tag = '*', config = function()
     require("toggleterm").setup({
       direction = 'float',
@@ -108,7 +109,7 @@ end
 -- Automatically source and re-compile packer whenever you save this init.lua
 local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
 vim.api.nvim_create_autocmd('BufWritePost', {
-  command = 'source <afile> | PackerCompile',
+  command = 'source <afile> | silent! LspStop | silent! LspStart | PackerCompile',
   group = packer_group,
   pattern = vim.fn.expand '$MYVIMRC',
 })
@@ -157,7 +158,8 @@ require('telescope-config')
 -- vim: ts=2 sts=2 sw=2 et
 
 -- NVIM Surround
-require("nvim-surround").setup()
+require('nvim-surround').setup()
+-- require('null-ls-config')
 
 
 require('nvim-autopairs').setup()

@@ -27,6 +27,7 @@ local on_attach = function(_, bufnr)
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+  nmap('J', vim.diagnostic.open_float, 'Show diagnostics')
   nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
@@ -53,7 +54,7 @@ require('mason').setup()
 -- Enable the following language servers
 -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
 -- Default LSP SErver, no need to custom
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'emmet_ls' }
+local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'emmet_ls', 'dockerls', 'yamlls' }
 -- Need to custom engine
 local custom_servers = { 'html', 'angularls' }
 local ensure_installed = {}
@@ -198,3 +199,13 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+
+vim.diagnostic.config({
+  virtual_text = false,
+})
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
