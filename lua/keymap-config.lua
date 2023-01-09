@@ -3,8 +3,8 @@ local set = vim.keymap.set
 set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- set("x", "p", [["_dP]])
-set("v", "J", ":m '>+1<CR>gv=gv")
-set("v", "K", ":m '<-2<CR>gv=gv")
+-- set("v", "J", ":m '>+1<CR>gv=gv")
+-- set("v", "K", ":m '<-2<CR>gv=gv")
 set("n", "<Leader>P", "\"+P", { silent = true })
 set("n", "<Leader>p", "\"+p", { silent = true })
 
@@ -33,6 +33,7 @@ set('n', '<leader>bf', function() require('telescope.builtin').buffers{ previewe
 set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 set('n', '<leader>st', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 set('n', '<leader>o', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 -- set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
