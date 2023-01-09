@@ -28,17 +28,7 @@ vim.o.cursorline = true
 
 -- Set colorscheme
 vim.o.termguicolors = true
--- vim.o.background = 'dark'
-require('kanagawa').setup({
-  keywordStyle = { bold = true },
-})
-vim.cmd [[colorscheme kanagawa]]
-
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 vim.o.scrolloff = 8
-
-vim.o.foldmethod = "expr"
-vim.o.foldexpr = "nvim_treesitter#foldexpr()"
-vim.o.foldenable = false -- Disable folding at startup
 
