@@ -9,13 +9,13 @@ return {
 		view = {
 			adaptive_size = true,
 			mappings = {
-					list = {
-						{ key = "h", action = "close_node" },
-						{ key = "l", action = "open_node" },
-						{ key = "v", action = "vsplit" },
-					},
+				list = {
+					{ key = "h", action = "close_node" },
+					{ key = "l", action = "open_node" },
+					{ key = "v", action = "vsplit" },
 				},
-			}
+			},
 		}
+	}
 	},
 }

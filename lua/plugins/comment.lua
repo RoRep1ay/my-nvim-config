@@ -1,3 +1,3 @@
 return {
-  {'numToStr/Comment.nvim', config = true }, -- "gc" to comment visual regions/lines
+	{ 'numToStr/Comment.nvim', opts = true }, -- "gc" to comment visual regions/lines
 }
