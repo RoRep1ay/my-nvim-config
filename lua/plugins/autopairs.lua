@@ -1,3 +1,3 @@
 return {
-  { 'windwp/nvim-autopairs', config = true },
+	{ 'windwp/nvim-autopairs', opts = true },
 }

@@ -17,11 +17,11 @@ local on_attach = function(_, bufnr)
 	nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
 	nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-	-- nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+	nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
 	nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
 	nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-	-- nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-	-- nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+	nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+	nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
 	-- See `:help K` for why this keymap
 	nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -48,18 +48,18 @@ end
 
 
 return {
-  { -- LSP Configuration & Plugins
-    'neovim/nvim-lspconfig',
+	{ -- LSP Configuration & Plugins
+		'neovim/nvim-lspconfig',
 		priority = 50,
-    dependencies = {
-      -- Automatically install LSPs to stdpath for neovim
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
+		dependencies = {
+			-- Automatically install LSPs to stdpath for neovim
+			'williamboman/mason.nvim',
+			'williamboman/mason-lspconfig.nvim',
 
-      -- Useful status updates for LSP
-      'j-hui/fidget.nvim',
-    },
-		config = function ()
+			-- Useful status updates for LSP
+			'j-hui/fidget.nvim',
+		},
+		config = function()
 			-- LSP settings.
 			--  This function gets run when an LSP connects to a particular buffer.
 			-- Setup mason so it can manage external tooling
@@ -158,6 +158,14 @@ return {
 				},
 			}
 
+		end
+	},
+
+	{ -- Autocompletion
+		'hrsh7th/nvim-cmp',
+		event = "InsertEnter",
+		dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
+		opts = function()
 			-- nvim-cmp setup
 			local cmp = require 'cmp'
 			local luasnip = require 'luasnip'
@@ -223,10 +231,5 @@ return {
 				vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 			end
 		end
-  },
-
-  { -- Autocompletion
-    'hrsh7th/nvim-cmp',
-    dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
-  },
+	},
 }

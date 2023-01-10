@@ -1,14 +1,15 @@
 return {
-  { -- Highlight, edit, and navigate code
-    'nvim-treesitter/nvim-treesitter',
+	{ -- Highlight, edit, and navigate code
+		'nvim-treesitter/nvim-treesitter',
 		build = ":TSUpdate",
 		-- event = "BufReadPost",
-    run = function()
-      pcall(require('nvim-treesitter.install').update { with_sync = true })
-    end,
-		config = function()
+		run = function()
+			pcall(require('nvim-treesitter.install').update { with_sync = true })
+		end,
+		opts = function()
 			require('nvim-treesitter.configs').setup {
-				ensure_installed = { 'lua', 'python', 'typescript', 'help', 'bash', 'css', 'json', 'yaml', 'hcl', 'html', 'dockerfile', 'javascript' },
+				ensure_installed = { 'lua', 'python', 'typescript', 'help', 'bash', 'css', 'json', 'yaml', 'hcl', 'html',
+					'dockerfile', 'javascript' },
 
 				highlight = { enable = true },
 				indent = { enable = true },
@@ -67,11 +68,11 @@ return {
 				},
 			}
 		end,
-  },
+	},
 
-  { -- Additional text objects via treesitter
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    after = 'nvim-treesitter',
-  },
+	{ -- Additional text objects via treesitter
+		'nvim-treesitter/nvim-treesitter-textobjects',
+		after = 'nvim-treesitter',
+	},
 
 }

@@ -7,3 +7,4 @@ vim.g.loaded_netrwPlugin = 1
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+
