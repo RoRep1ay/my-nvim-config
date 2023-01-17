@@ -13,7 +13,7 @@ set("v", "<Leader>y", "\"+y", { silent = true })
 set("v", "<Leader>P", "\"+P", { silent = true })
 set("v", "<Leader>p", "\"+p", { silent = true })
 
-set('n', '<leader>w', "<cmd>:w<cr>")
+-- set('n', '<leader>w', "<cmd>:w<cr>")
 set("n", "<C-h>", "<C-w>h")
 set("n", "<C-j>", "<C-w>j")
 set("n", "<C-k>", "<C-w>k")
