@@ -54,7 +54,7 @@ return {
 		event = "BufAdd",
 		config = function()
 			require('bufferline').setup {
-				highlights = highlights()
+				-- highlights = highlights()
 			}
 		end
 	}
