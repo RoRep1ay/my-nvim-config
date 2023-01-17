@@ -1,3 +1,3 @@
 return {
-	{ 'kylechui/nvim-surround', opts = true }
+  { 'kylechui/nvim-surround', opts = true }
 }
