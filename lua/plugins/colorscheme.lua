@@ -11,7 +11,10 @@ return {
     end,
   },
 
-  { 'folke/tokyonight.nvim' },
+  { 'folke/tokyonight.nvim', opts = function ()
+      -- vim.cmd [[colorscheme tokyonight-night]]
+    end
+  },
   { 'Mofiqul/vscode.nvim' },
   { 'bluz71/vim-nightfly-colors' },
   { 'bluz71/vim-moonfly-colors' },

@@ -2,6 +2,16 @@ return {
   -- Fuzzy Finder (files, lsp, etc)
   { 'nvim-telescope/telescope.nvim', priority=60, branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' }, opts = function()
     require('telescope').setup {
+      pickers = {
+        buffers = {
+          show_all_buffers = true,
+          sort_lastused = true,
+          previewer = false,
+          mappings = {
+            i = { ["<c-d>"] = "delete_buffer" }
+          }
+        }
+      },
       defaults = {
         mappings = {
           i = {

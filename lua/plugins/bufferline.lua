@@ -51,11 +51,11 @@ return {
   { 'akinsho/bufferline.nvim',
     version = "v3.x",
     dependencies = 'nvim-tree/nvim-web-devicons',
-    event = "BufAdd",
-    config = function()
-      require('bufferline').setup {
-        highlights = highlights()
-      }
-    end
+    -- event = "BufAdd",
+    -- config = function()
+    --   require('bufferline').setup {
+    --     highlights = highlights()
+    --   }
+    -- end
   }
 }
