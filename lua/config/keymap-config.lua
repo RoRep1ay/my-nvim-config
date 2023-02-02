@@ -14,22 +14,32 @@ set("v", "<Leader>P", "\"+P", { silent = true })
 set("v", "<Leader>p", "\"+p", { silent = true })
 
 -- set('n', '<leader>w', "<cmd>:w<cr>")
-set("n", "<C-h>", "<C-w>h")
-set("n", "<C-j>", "<C-w>j")
-set("n", "<C-k>", "<C-w>k")
-set("n", "<C-l>", "<C-w>l")
+-- set("n", "<C-h>", "<C-w>h")
+-- set("n", "<C-j>", "<C-w>j")
+-- set("n", "<C-k>", "<C-w>k")
+-- set("n", "<C-l>", "<C-w>l")
 set("n", "<leader>h", "<cmd>:noh<cr>")
 
 -- diagnostic
-set('n', '[j', vim.diagnostic.goto_prev)
-set('n', ']j', vim.diagnostic.goto_next)
+set('n', '[j', function ()
+	vim.diagnostic.goto_prev { severity = vim.diagnostic.severity.ERROR }
+end)
+set('n', ']j', function()
+	vim.diagnostic.goto_next { severity = vim.diagnostic.severity.ERROR }
+end)
+set('n', '[J', function ()
+	vim.diagnostic.goto_prev {}
+end)
+set('n', ']J', function()
+	vim.diagnostic.goto_next {}
+end)
 set('n', '<leader>Q', vim.diagnostic.open_float)
 set('n', '<leader>q', vim.diagnostic.setloclist)
 
 -- -- Telescope
 set('n', '<leader>f', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 set('n', '<leader>go', require('telescope.builtin').git_status, { desc = 'Open Changed Files' })
-set('n', '<leader>bf', function() require('telescope.builtin').buffers { previewer = false } end,
+set('n', '<leader>sb', function() require('telescope.builtin').buffers { previewer = false } end,
 	{ desc = 'Open Buffer File' })
 set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
@@ -47,8 +57,8 @@ set('n', '<leader>sf', function()
 end, { desc = '[/] Fuzzily search in current buffer]' })
 
 -- Bufferline
-set("n", "<S-l>", ":BufferLineCycleNext<CR>", { silent = true, desc = "Switch to left buffer " })
-set("n", "<S-h>", ":BufferLineCyclePrev<CR>", { silent = true, desc = "Switch to right buffer " })
+-- set("n", "<S-l>", ":BufferLineCycleNext<CR>", { silent = true, desc = "Switch to left buffer " })
+-- set("n", "<S-h>", ":BufferLineCyclePrev<CR>", { silent = true, desc = "Switch to right buffer " })
 set("n", "<Leader>bl", ":BufferLineCloseRight<CR>", { silent = true, desc = 'Close All Buffer To The Right' })
 set("n", "<Leader>bh", ":BufferLineCloseLeft<CR>", { silent = true, desc = 'Close All Buffer To The Left' })
 set("n", "<Leader>bq", ":BufferLineTogglePin<CR>", { silent = true, desc = 'Pin Buffer' })
