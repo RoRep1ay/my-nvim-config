@@ -68,9 +68,9 @@ return {
       -- Enable the following language servers
       -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
       -- Default LSP SErver, no need to custom
-      local servers = { 'pyright', 'tsserver', 'emmet_ls', 'dockerls', 'yamlls', 'terraformls', 'sumneko_lua', 'tailwindcss', 'bashls' }
+      local servers = { 'tsserver', 'emmet_ls', 'dockerls', 'yamlls', 'terraformls', 'lua_ls', 'tailwindcss', 'bashls' }
       -- Need to custom engine
-      local custom_servers = { 'html', 'angularls' }
+      local custom_servers = { 'html', 'angularls', 'pyright' }
       local ensure_installed = {}
 
       for _, server in ipairs(servers) do
@@ -127,6 +127,23 @@ return {
         capabilities = htmlCapabilities,
       })
 
+      require('lspconfig').pyright.setup({
+        flags = {
+          debounce_text_changes = 150,
+        },
+        settings = {
+          python =  {
+            analysis = {
+              autoSearchPaths = false,
+              useLibraryCodeForTypes = false,
+              diagnosticMode = 'openFilesOnly',
+            }
+          }
+        },
+        on_attach = on_attach,
+        capabilities = capabilities,
+      })
+
       -- Turn on lsp status information
       require('fidget').setup()
 
@@ -137,7 +154,7 @@ return {
       table.insert(runtime_path, 'lua/?.lua')
       table.insert(runtime_path, 'lua/?/init.lua')
 
-      require('lspconfig').sumneko_lua.setup {
+      require('lspconfig').lua_ls.setup {
         on_attach = on_attach,
         capabilities = capabilities,
         settings = {
